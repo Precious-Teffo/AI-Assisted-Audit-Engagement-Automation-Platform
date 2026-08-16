@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Audit engagement workflow</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Audit engagement workflow — full diagram</h1>
+<div id="diagram">
+<pre class="mermaid">
+flowchart TD
+    A[Audit start] --> B[Engagement letter template]
+    B --> C[Auditor completes]
+    C --> D{Manager review}
+    D -->|Notes| E[Auditor attend review notes]
+    E --> D
+    D -->|No notes| F[Manager approves]
+    F --> G{Director review}
+    G -->|Approved| H[Engagement letter approved]
+    G -->|Notes| I[Auditor attend review notes]
+    I --> D2[Manager review]
+    D2 --> F2[Manager approval]
+    F2 --> G
+
+    H --> J["AI reads engagement letter"]
+    J --> K["AI drafts work programme"]
+    K --> L[Auditor edits]
+    L --> M{Manager review }
+    M -->|Notes| N[Auditor attend review notes ]
+    N --> M
+    M -->|Approved| O{Director review }
+    O -->|Notes| P[Auditor attend review notes  ]
+    P --> M
+    O -->|Approved| Q[Work programme approved]
+
+    Q --> R["AI generates RFI"]
+    R --> S[Send to client]
+    S --> T[Client provides information]
+    T --> U[RFI tracking]
+
+    Q --> V["AI populates working papers"]
+    V --> W[Team access granted from engagement letter]
+    U -.information  as received.-> X
+    W --> X[Auditor performs audit work]
+    X --> Y["AI quality check"]
+    Y --> Z[Auditor completes]
+    Z --> AA{Manager review  }
+    AA -->|Notes| AB[Auditor attend review notes   ]
+    AB --> AC[Manager re-review]
+    AC --> AA
+    AA -->|Approved| AD[Complete]
+
+    classDef stage fill:#E6F1FB,stroke:#185FA5,color:#042C53,stroke-width:1px;
+    classDef decision fill:#EEEDFE,stroke:#534AB7,color:#26215C,stroke-width:1px;
+    classDef fix fill:#FAECE7,stroke:#993C1D,color:#4A1B0C,stroke-width:1px;
+    classDef done fill:#EAF3DE,stroke:#3B6D11,color:#173404,stroke-width:1px;
+    classDef ai fill:#0F766E,stroke:#042C2A,color:#ffffff,stroke-width:2px;
+
+    class A,B,C,L,S,T,U,W,X,Z stage;
+    class D,G,M,O,AA decision;
+    class E,I,D2,F2,N,P,AB,AC fix;
+    class F,H,Q,AD done;
+    class J,K,R,V,Y ai;
+
+    subgraph Legend[" "]
+        direction LR
+        LA["AI-automated step"]
+        LB[Human/process step]
+        LC{Human decision}
+        LD[Revision loop]
+    end
+    class LA ai;
+    class LB stage;
+    class LC decision;
+    class LD fix;
+</pre>
+</div>
+
+<script type="module"  src="script.js">
+</script>
+</body>
+</html>
