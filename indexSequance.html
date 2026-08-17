@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>EngagementFlow — sequence diagram</title>
+<link rel="stylesheet" href="styleSequance.css">
+</head>
+<body>
+<h1>EngagementFlow — sequence diagram</h1>
+<p class="sub">Same process as the flowchart, ordered by who talks to whom over time</p>
+<div id="diagram">
+<pre class="mermaid">
+sequenceDiagram
+    participant Mgr as Manager
+    participant Sys as System
+    participant Aud as Auditor
+    participant AI as AI
+    participant Dir as Director
+    participant Cli as Client
+    participant Team as Team member
+
+    Mgr->>Sys: Create project & add team members
+    Sys->>Aud: Project appears in queue
+
+    Aud->>Sys: Select project, template, fill letter
+    Aud->>Mgr: Submit engagement letter
+
+    loop Until manager approves
+        Mgr-->>Aud: Notes
+        Aud->>Mgr: Resubmit
+    end
+    Mgr->>Dir: Forward for review
+
+    loop Until director approves
+        Dir-->>Aud: Notes
+        Aud->>Mgr: Resubmit
+        Mgr->>Dir: Forward
+    end
+    Dir->>Sys: Approve engagement letter
+
+    Sys->>AI: Read approved letter
+    AI->>Aud: Deliver work programme draft
+
+    Aud->>Mgr: Submit work programme
+    loop Until manager approves
+        Mgr-->>Aud: Notes
+        Aud->>Mgr: Resubmit
+    end
+    Mgr->>Dir: Forward for review
+    loop Until director approves
+        Dir-->>Aud: Notes
+        Aud->>Mgr: Resubmit
+        Mgr->>Dir: Forward
+    end
+    Dir->>Sys: Approve work programme
+
+    par RFI
+        Sys->>AI: Trigger RFI
+        AI->>Aud: RFI ready to download
+        Aud->>Cli: Send RFI (manual)
+    and Working papers
+        Sys->>AI: Trigger working papers
+        AI->>Aud: Draft working papers
+        Aud->>Aud: Review & edit working papers
+        Aud->>Mgr: Submit working papers
+        loop Until manager approves
+            Mgr-->>Aud: Notes
+            Aud->>Mgr: Resubmit
+        end
+        Mgr->>Team: Grant access
+        Note over Aud,Team: Auditor and team work on papers together
+    end
+</pre>
+</div>
+
+<script type="module" src="scriptSequance.js">
+  
+</script>
+</body>
+</html>
